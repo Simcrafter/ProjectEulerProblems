@@ -14,7 +14,7 @@ Let S(N)=∑(1,N,f(n)). You are given S(10^8)=9613563919.
 Find S(10^14).
 */
 
-long long primeFactorCount(long long);
+vector<long long> primeFactorCount(long long);
 long long f(long long);
 long long S(long long);
 
@@ -23,7 +23,7 @@ int main(){
     cout<<"S(10^14) = "<<S(pow(10,14))<<endl;
 }
 
-long long primeFactorCount(long long n){
+vector<long long> primeFactorCount(long long n){
     vector<long long> primeFactors;
 
     while (n%2 == 0){
@@ -40,14 +40,23 @@ long long primeFactorCount(long long n){
         primeFactors.push_back(n);
     }
 
-    return primeFactors.size();
+    return primeFactors;
 }
 
 long long f(long long n){
     if (n == 1) {
         return 1;
     }else{
-        long long val = pow(2, primeFactorCount(n));
+        long long val = 0;
+        long long pFCount = primeFactorCount(n).size();
+        if(pFCount == 1){ val = 2; }
+        else if (pFCount == 2) { val = 4; }
+        else if (pFCount == 3) { val = 8; }
+        else if (pFCount == 4) { val = 16; }
+        else if (pFCount == 5) { val = 32; }
+        else if (pFCount == 6) { val = 64; }
+        else { val = pow(2, primeFactorCount(n).size()); }
+
         //cout<<val<<endl;
         return val;
     }
